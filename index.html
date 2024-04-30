@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Investment Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #results {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            display: none;
+        }
+
+        #results p {
+            margin: 8px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Team Investment Calculator</h1>
+        <form id="investmentForm">
+            <label for="numPersons">Enter no. of persons involved:</label>
+            <input type="number" id="numPersons" required>
+            <label for="numSets">Enter no. of sets:</label>
+            <input type="number" id="numSets" required>
+            <label for="team1">Enter Team 1:</label>
+            <input type="text" id="team1" required>
+            <label for="team2">Enter Team 2:</label>
+            <input type="text" id="team2" required>
+            <label for="team1Ratio">Enter Team 1 ratio:</label>
+            <input type="number" step="0.01" id="team1Ratio" required>
+            <label for="team2Ratio">Enter Team 2 ratio:</label>
+            <input type="number" step="0.01" id="team2Ratio" required>
+            <button type="button" onclick="calculate()">Calculate</button>
+        </form>
+        
+        <div id="results">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            var numPersons = parseFloat(document.getElementById("numPersons").value);
+            var numSets = parseFloat(document.getElementById("numSets").value);
+            var team1 = document.getElementById("team1").value;
+            var team2 = document.getElementById("team2").value;
+            var team1Ratio = parseFloat(document.getElementById("team1Ratio").value);
+            var team2Ratio = parseFloat(document.getElementById("team2Ratio").value);
+
+            var result1 = 1999.80 / team1Ratio;
+            var result2 = 1999.80 / team2Ratio;
+            var totalInvestment = numSets * (result1 + result2);
+            var investmentPerPerson = totalInvestment / numPersons;
+            var totalLoss = numSets * (1999.80 - result1 - result2);
+            var lossPerPerson = totalLoss / numPersons;
+            var profitEachSet = 4000 - result1 - result2;
+            var profitPerPerson = ((numSets * 2000) - (result1 - result2)) / numPersons;
+
+            var resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = `
+                <p>${team1} team: ${result1.toFixed(1)}</p>
+                <p>${team2} team: ${result2.toFixed(1)}</p>
+                <p>Total Investment: ${totalInvestment.toFixed(1)}</p>
+                <p>Investment per person: ${investmentPerPerson.toFixed(1)}</p>
+                <p>Total Loss: ${totalLoss.toFixed(1)}</p>
+                <p>Loss per person: ${lossPerPerson.toFixed(1)}</p>
+                <p>Profit each set: ${profitEachSet.toFixed(1)}</p>
+                <p>Profit for each person if two sixes: ${profitPerPerson.toFixed(1)}</p>
+            `;
+            resultsDiv.style.display = "block";
+        }
+    </script>
+</body>
+</html>
